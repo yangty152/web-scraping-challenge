@@ -7,6 +7,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 import pandas as pd
 
 def scrape():
+    results = {}
     #NASA Mars News
     executable_path = {'executable_path': ChromeDriverManager().install()}
     browser = Browser('chrome', **executable_path, headless=False)
@@ -16,6 +17,8 @@ def scrape():
     soup = bs(html, 'html.parser')
     news_title = soup.find('div', class_='content_title').text
     news_p = soup.find('div', class_='article_teaser_body').text
+    results['news_title'] = news_title
+    results['news_p'] = news_p
 
     # Scraping https://spaceimages-mars.com/
     url = 'https://spaceimages-mars.com/'
@@ -25,6 +28,7 @@ def scrape():
     result = soup.find('a', class_='showimg fancybox-thumbs')
     href= result['href']
     featured_image_url = 'https://spaceimages-mars.com/' + href
+    results['featured_image_url'] = featured_image_url
 
     ## Mars Fact
     url = 'https://galaxyfacts-mars.com'
@@ -33,6 +37,7 @@ def scrape():
     df.head()
     df = df.rename(columns = {0:'Diameter', 1:'Mass'})
     html_table = df.to_html()
+    results['html_table'] = html_table
 
     # Mars Hemispheres
     url='https://marshemispheres.com/'
@@ -58,7 +63,9 @@ def scrape():
             img_url=url+full_image
         dic = dict({"title":title, "img_url":img_url})
         hemisphere_image_urls.append(dic)
-    
+    results['hemisphere_image_urls'] = hemisphere_image_urls
+   
     # Quit the browser
     browser.quit()
-    return news_title, news_p, featured_image_url, html_table, hemisphere_image_urls
+    
+    return results
