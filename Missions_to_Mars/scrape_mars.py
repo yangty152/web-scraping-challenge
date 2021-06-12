@@ -46,26 +46,25 @@ def scrape():
     html = browser.html
     # Parse HTML with Beautiful Soup
     soup = bs(html, 'html.parser')
-    results = soup.find_all('div', class_='description')
+    images = soup.find_all('div', class_='description')
     hemisphere_image_urls=[]
-    for result in results:
-        if result.h3:
-            title=result.h3.text
-        a = result.find('a')
+    for image in images:
+        if image.h3:
+            title=image.h3.text
+            a = image.find('a')
         if a['href']:
             page_url=a['href']
             image_url=url+page_url
             browser.visit(image_url)
             image_html=browser.html
             soup=bs(image_html, 'html.parser')
-            result=soup.find_all('li')[1]
-            full_image=result.a['href']
+            image=soup.find_all('li')[1]
+            full_image=image.a['href']
             img_url=url+full_image
-        dic = dict({"title":title, "img_url":img_url})
-        hemisphere_image_urls.append(dic)
-    results['hemisphere_image_urls'] = hemisphere_image_urls
-   
-    # Quit the browser
-    browser.quit()
+            dic = dict({"title":title, "img_url":img_url})
+            hemisphere_image_urls.append(dic)
+    results["image_urls"]=hemisphere_image_urls
     
+        # Quit the browser
+    browser.quit()
     return results

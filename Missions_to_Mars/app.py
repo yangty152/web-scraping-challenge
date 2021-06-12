@@ -20,9 +20,9 @@ def index():
 
 @app.route("/scrape")
 def scraper():
-    listings = mongo.db.listings
-    listings_data = scrape_phone.scrape()
-    listings.update({}, listings_data, upsert=True)
+    results = mongo.db.mission_to_mars
+    results_data = scrape_mars.scrape()
+    results.update({}, results_data, upsert=True)
     return redirect("/", code=302)
 
 
