@@ -33,11 +33,11 @@ def scrape():
     ## Mars Fact
     url = 'https://galaxyfacts-mars.com'
     tables = pd.read_html(url)
-    df=tables[1]
-    df.head()
-    df = df.rename(columns = {0:'Diameter', 1:'Mass'})
+    df = tables[0]
+    df = df.rename(columns = {0:'Description', 1:'Mars', 2:'Earth'})
+    df.set_index('Description', inplace=True)
     html_table = df.to_html()
-    results['html_table'] = html_table
+    results['html_table']=html_table
 
     # Mars Hemispheres
     url='https://marshemispheres.com/'
@@ -58,7 +58,7 @@ def scrape():
             browser.visit(image_url)
             image_html=browser.html
             soup=bs(image_html, 'html.parser')
-            image=soup.find_all('li')[1]
+            image=soup.find_all('li')[0]
             full_image=image.a['href']
             img_url=url+full_image
             dic = dict({"title":title, "img_url":img_url})

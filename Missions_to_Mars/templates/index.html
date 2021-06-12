@@ -6,48 +6,74 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Mission to Mars</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="nofollow" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
 <body>
-  <div class="container">
-
-    <div class="jumbotron text-center">
+  <div class="jumbotron text-center">
       <h1>Mission to Mars</h1>
       <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape new Data</a></p>
-    </div>
-    <!-- Mission to Mars data -->
-        <div class="row" id="latest_news">
-            <div class="col-md-12">
-                <h2>Latest Mars News</h2>
-                <h4>{{results.news_title}}</h4>
-                <p>{{results.news_p}}</p>
-            </div>
-        </div>
-        <div class="row" id="featured_image">
-            <div class="col-md-6">
-                <h4>Featured Mars Image</h4>
-                <p>{{results.featured_image_url}}</p>
-                <img src="{{ results.featured_image_url }}" alt="featured_image">
-            </div>
-            <div class="col-md-5">
-            {{results.html_table}}
-            </div>
-        </div>
-              <div class="row" id="Hemisphere">
-                <div class="col-md-4">
-                </div>
-                <div class="col-md-4">
-                </div>
-                <div class="col-md-4">
-                </div>
-                <div class="col-md-4">
-                </div>
-              </div>
-            </div>
-    
-
   </div>
+  <div class="container">
+    <!-- Mission to Mars data -->
+    <div class="row" id="latest_news">
+      <div class="col-md-12">
+        <h4>Latest Mars News</h4>
+        <hr>
+        <h6>{{ results.news_title }}</h6>
+        <p>{{ results.news_p }}</p>
+      </div>
+    </div>
+    <div class = "container">
+      <div class="row">
+        <div class='col-6'>
+          <h4>Featured Mars Image</h4>
+          <hr>
+          <img src="{{ results.featured_image_url }}" width='400' height = '300' alt="featured_image">
+        </div>
+        <div class='col-6'>
+            {{ results.html_table | safe }}
+        </div>        
+      </div>
+    </div>  
+    <div class = 'container'>
+        <h4>Mars Hemispheres</h4>
+        <hr>
+        <div class = 'row'>
+          <div class="col-3">
+            <div class="card" style="width: 12rem;">
+              <img src="{{ results.image_urls[0].img_url }}" alt="pic1" class="card-img-top" >
+              <div class="card-body">
+                <p class="card-text">{{ results.image_urls[0].title }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="card" style="width: 12rem;">
+              <img src="{{ results.image_urls[1].img_url }}" alt="pic1" class="card-img-top" >
+              <div class="card-body">
+                <p class="card-text">{{ results.image_urls[1].title }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="card" style="width: 12rem;">
+              <img src="{{ results.image_urls[2].img_url }}" alt="pic1" class="card-img-top" >
+              <div class="card-body">
+                <p class="card-text">{{ results.image_urls[2].title }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="card" style="width: 12rem;">
+              <img src="{{ results.image_urls[3].img_url }}" alt="pic1" class="card-img-top" >
+              <div class="card-body">
+                <p class="card-text">{{ results.image_urls[3].title }}</p>
+              </div>
+            </div>
+          </div>
+        </div>          
+      </div>
 </body>
 
 </html>
