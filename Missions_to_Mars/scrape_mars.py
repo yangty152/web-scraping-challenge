@@ -8,7 +8,7 @@ import pandas as pd
 
 def scrape():
     results = {}
-    #NASA Mars News
+    # NASA Mars News
     executable_path = {'executable_path': ChromeDriverManager().install()}
     browser = Browser('chrome', **executable_path, headless=False)
     url = 'https://redplanetscience.com/'
@@ -20,7 +20,7 @@ def scrape():
     results['news_title'] = news_title
     results['news_p'] = news_p
 
-    # Scraping https://spaceimages-mars.com/
+    # JPL Mars Space Images - Featured Image
     url = 'https://spaceimages-mars.com/'
     browser.visit(url)
     html=browser.html
@@ -30,7 +30,7 @@ def scrape():
     featured_image_url = 'https://spaceimages-mars.com/' + href
     results['featured_image_url'] = featured_image_url
 
-    ## Mars Fact
+    # Mars Fact
     url = 'https://galaxyfacts-mars.com'
     tables = pd.read_html(url)
     df = tables[0]
@@ -42,9 +42,7 @@ def scrape():
     # Mars Hemispheres
     url='https://marshemispheres.com/'
     browser.visit(url)
-    # HTML object
     html = browser.html
-    # Parse HTML with Beautiful Soup
     soup = bs(html, 'html.parser')
     images = soup.find_all('div', class_='description')
     hemisphere_image_urls=[]
@@ -65,6 +63,6 @@ def scrape():
             hemisphere_image_urls.append(dic)
     results["image_urls"]=hemisphere_image_urls
     
-        # Quit the browser
+    # Quit the browser
     browser.quit()
     return results
